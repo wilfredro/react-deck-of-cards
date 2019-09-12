@@ -6,7 +6,7 @@ export default class Card extends Component {
     super(props);
     this.card = this.props.card;
     this.state = {
-      isFaceUp: ''
+      isFaceUp: false
     }
     this.suitSymbols = {
       'SPADES': '♠',
@@ -14,10 +14,6 @@ export default class Card extends Component {
       'CLUBS': '♣',
       'HEARTS': '♥'
     }
-  }
-
-  componentDidMount() {
-     this.state = { isFaceUp: false };
   }
 
   toggleCard = () => {

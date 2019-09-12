@@ -13,6 +13,7 @@ export default class Table extends Component {
       playerSum: 0,
       dealerSum: 0,
       loaded: false,
+      handKey: 0,
     };
   }
 
@@ -76,7 +77,8 @@ export default class Table extends Component {
       playerHand: [],
       dealerHand: [],
       playerSum: 0,
-      dealerSum: 0
+      dealerSum: 0,
+      handKey: this.state.handKey + 1,
     });
   }
 
@@ -147,6 +149,7 @@ export default class Table extends Component {
           </div>
           {this.state.loaded &&
             <Hand
+              key={"Player"+this.state.handKey}
               name="Player"
               cards={this.state.playerHand}
               onDraw={this.onDraw}
@@ -157,6 +160,7 @@ export default class Table extends Component {
           </div>
           {this.state.loaded &&
             <Hand
+              key={"Dealer"+this.state.handKey}
               name="Dealer"
               cards={this.state.dealerHand}
               onDraw={this.onDraw}

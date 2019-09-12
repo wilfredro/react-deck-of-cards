@@ -12,7 +12,7 @@ export default class Hand extends Component {
     let card = {
       value: value,
       name: this.name,
-      isFaceUp = isFaceUp
+      isFaceUp: isFaceUp
     };
     this.props.getFaceUpValue(card);
   }
