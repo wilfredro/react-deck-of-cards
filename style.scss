@@ -1,6 +1,6 @@
 body {
   background-color: #1a4a1c;
-  font-family: "Roboto", sans-serif;
+  font-family: "Gotham SSm A","Gotham SSm B",Helvetica,Arial,Verdana,sans-serif;
 }
 
 @mixin fan($count, $angle) {
@@ -127,6 +127,7 @@ body {
         position: absolute;
         left: 50%;
         top: 25%;
+        right: 50%;
         font-size: 5em;
         margin-left: -25px;
       }
