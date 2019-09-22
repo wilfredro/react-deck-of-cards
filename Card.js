@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { render } from 'react-dom';
 
-export default class Card extends Component {
+export default class Card extends PureComponent {
   constructor(props) {
     super(props);
     this.card = this.props.card;
@@ -41,6 +41,7 @@ export default class Card extends Component {
   }
 
   render() {
+
     let rank = this.card.code.charAt(0);
     let suit = this.suitSymbols[this.card.suit];
     rank = rank === '0' ? '10' : rank;
@@ -58,7 +59,7 @@ export default class Card extends Component {
         className={cardClass}
         onClick={this.toggleCard} >
         {this.state.isFaceUp &&
-          <React.Fragment>
+          <React.Fragment key={rank - suit}>
             <span className="rank top">{rank}</span>
             <span className="suit top">{suit}</span>
             <span className="face">{suit}</span>

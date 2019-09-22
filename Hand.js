@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { render } from 'react-dom';
 import Card from './Card'
 
-export default class Hand extends Component {
+export default class Hand extends PureComponent {
   constructor(props) {
     super(props);
     this.name = this.props.name;
@@ -18,7 +18,6 @@ export default class Hand extends Component {
   }
 
   render() {
-
     return (
 
       <div className="container">

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent, Component } from 'react';
 import Hand from './Hand';
 
 export default class Table extends Component {
@@ -19,35 +19,34 @@ export default class Table extends Component {
 
   componentDidMount() {
     //fetch once and store 52 card deck
-    const url = 'https://deckofcardsapi.com/api/deck/new/draw/?count=52'
-    fetch(url)
-      .then(res => {
-        return res.json();
-      })
+    this.getDeck()
       .then(data => {
-        this.initHands(data.cards);
-        this.setState({
-          orgDeck: data,
-          loaded: true
-        });
-
+        this.initHands(data.cards, data);
       })
       .catch(err => {
         console.error(err);
       })
   }
 
-  initHands = (deck) => {
-    const cards = [...deck];
+  getDeck = async () => {
+    let response = await fetch('https://deckofcardsapi.com/api/deck/new/draw/?count=52');
+    let data = await response.json();
+    return data;
+  }
+
+  initHands = (cards, deck) => {
+    const cards = [...cards];
     const dealerCard = [cards.pop()];
     const playerCard = [cards.pop()];
 
-    this.setState({
+    this.setState((prevState) => ({
       playerHand: playerCard,
       dealerHand: dealerCard,
       playingDeck: cards,
-      deckCount: cards.length
-    });
+      deckCount: cards.length,
+      loaded: true,
+      orgDeck: deck ? deck : prevState.orgDeck 
+    }));
   }
 
   computeHandSum = (props) => {
@@ -73,13 +72,13 @@ export default class Table extends Component {
   }
 
   clearHands = () => {
-    this.setState({
+    this.setState((prevState) => ({
       playerHand: [],
       dealerHand: [],
       playerSum: 0,
       dealerSum: 0,
-      handKey: this.state.handKey + 1,
-    });
+      handKey: prevState.handKey + 1,
+    }));
   }
 
   shuffle = (deck) => {
@@ -124,14 +123,14 @@ export default class Table extends Component {
       }
     }
 
-    this.setState({
+    this.setState((prevState) => ({
       playingDeck: cards,
-      deckCount: this.state.deckCount - 1,
-    });
+      deckCount: prevState.deckCount - 1,
+    }));
   }
 
   render() {
-
+    
     let btnLabel = 'Play Again';
 
     return (
@@ -149,7 +148,7 @@ export default class Table extends Component {
           </div>
           {this.state.loaded &&
             <Hand
-              key={"Player"+this.state.handKey}
+              key={"Player" + this.state.handKey}
               name="Player"
               cards={this.state.playerHand}
               onDraw={this.onDraw}
@@ -160,7 +159,7 @@ export default class Table extends Component {
           </div>
           {this.state.loaded &&
             <Hand
-              key={"Dealer"+this.state.handKey}
+              key={"Dealer" + this.state.handKey}
               name="Dealer"
               cards={this.state.dealerHand}
               onDraw={this.onDraw}
