@@ -4,9 +4,6 @@ import Table from './Table';
 import './style.scss';
 
 class App extends Component {
-  constructor() {
-    super();
-  }
 
   render() {
     return (
